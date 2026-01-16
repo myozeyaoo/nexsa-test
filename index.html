@@ -642,6 +642,32 @@
 /* Adjust this to your fixed header height; harmless on desktop */
   #start { scroll-margin-top: 80px; }
 
+ /* Mobile-only top breathing space after auto-scroll */
+  @media (max-width: 767px) {
+    .hero-content.mobile-offset {
+      margin-top: 3rem;   /* ≈ 2 lines of space */
+    }
+  }
+
+
+
+/* Desktop-only: lift the ENTIRE hero text block proportionally */
+@media (min-width: 768px) {
+  #home .hero-content {
+    transform: translateY(-0.50rem);
+  }
+}
+
+
+
+/* === Fixed-header anchor offset (Desktop only) === */
+@media (min-width: 768px) {
+  .anchor-offset {
+    padding-top: 120px;   /* header height + breathing space */
+    margin-top: -120px;
+  }
+}
+
 </style> 
 </head> 
 <body> 
@@ -846,12 +872,20 @@
  <a class='btn-primary' id='partner-cta' href='#contact'>Become a Partner</a> 
  </div> 
 </section> 
-<section id='contact' class='contact-light'> 
- <div class='container'> 
- <div class='section-header'> 
- <span class='section-label'>Get in Touch</span> 
- <h2 class='section-title-light'>Ready to Innovate Together?</h2> 
- </div> 
+
+
+
+<section id="contact" class="contact-light anchor-offset">
+  <span class="anchor-spacer" aria-hidden="true"></span>
+
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title-light">Ready to Innovate Together?</h2>
+    </div>
+    <!-- rest stays the same -->
+
+
  <div class='contact-layout'> 
  <div class='contact-block'> 
  <h3 class='contact-heading'>Office</h3> 
@@ -979,21 +1013,26 @@ if (toggle) {
   });
 </script>
 
+
+ 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var isMobile = window.matchMedia('(max-width: 767px)').matches;
-    if (!isMobile) return;
 
-    // Adjust selectors to your navbar brand/home links
-    var candidates = document.querySelectorAll(
-      '.navbar-brand, a[href="/"], a[href="index.html"], a[href="./"]'
-    );
+    if (isMobile && !location.hash) {
+      var start = document.getElementById('start');
+      var heroContent = document.querySelector('.hero-content');
 
-    candidates.forEach(function (a) {
-      a.setAttribute('href', '#start');
-    });
+      if (heroContent) {
+        heroContent.classList.add('mobile-offset');
+      }
+
+      if (start) {
+        start.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+    }
   });
 </script>
- 
+
 </body> 
 </html>
