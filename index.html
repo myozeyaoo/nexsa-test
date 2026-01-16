@@ -639,6 +639,9 @@
   }
 }
 
+/* Adjust this to your fixed header height; harmless on desktop */
+  #start { scroll-margin-top: 80px; }
+
 </style> 
 </head> 
 <body> 
@@ -673,6 +676,7 @@
  </div> 
  </div> 
  <div class='hero-content'> 
+<span id="start"></span>
  <span class='hero-tags'>White‑Label Delivery • SI/MSP Partners • TRaaS</span> 
  <h1 class='hero-title'>Your Trusted Partner in Thailand for Innovative ICT Solutions</h1> 
 <p class="powered-by"> 
@@ -960,6 +964,36 @@ if (toggle) {
   });
 }
 
-</script> 
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // MOBILE-ONLY: change 767px if your breakpoint differs
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    // Only auto-jump on mobile and only if the URL doesn't already have a hash
+    if (isMobile && !location.hash) {
+      var start = document.getElementById('start');
+      if (start) start.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (!isMobile) return;
+
+    // Adjust selectors to your navbar brand/home links
+    var candidates = document.querySelectorAll(
+      '.navbar-brand, a[href="/"], a[href="index.html"], a[href="./"]'
+    );
+
+    candidates.forEach(function (a) {
+      a.setAttribute('href', '#start');
+    });
+  });
+</script>
+ 
 </body> 
 </html>
