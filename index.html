@@ -1034,5 +1034,27 @@ if (toggle) {
   });
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (!isMobile) return;
+
+    // Redirect Home link to mobile anchor
+    document.querySelectorAll('a[href="#home"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        var target = document.getElementById('start');
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Close mobile menu if open
+        document.body.classList.remove('menu-open');
+      });
+    });
+  });
+</script>
+
 </body> 
 </html>
